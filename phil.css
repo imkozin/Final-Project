@@ -52,7 +52,7 @@ body, html {
   }
 
 body {
-    background: url(1271805.jpg);
+    background: url('/images/1271805.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

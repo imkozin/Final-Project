@@ -61,7 +61,7 @@ body, html {
   }
 
 body {
-    background: url(leonardo-dicaprio-actor.jpg);
+    background: url('/images/leonardo-dicaprio-actor.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

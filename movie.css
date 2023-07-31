@@ -47,7 +47,7 @@ body, html {
   }
 
 body {
-    background: url(510263084.jpg);
+    background: url('/images/510263084.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

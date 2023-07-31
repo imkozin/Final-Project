@@ -47,7 +47,7 @@ body, html {
   }
 
 body {
-    background: url(leonardo-dicaprio-4k-5k-wallpaper.jpg);
+    background: url('/images/leonardo-dicaprio-4k-5k-wallpaper.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

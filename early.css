@@ -45,7 +45,7 @@ body, html {
   }
 
 body {
-    background: url(akter-leonardo-dicaprio.jpg);
+    background: url('/images/akter-leonardo-dicaprio.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
