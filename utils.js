@@ -11,7 +11,7 @@ const generateToken = (user) => {
             name: user.name,
             email: user.email
         }, secret, {
-            expiresIn: "1m"
+            expiresIn: "15m"
         });
 } 
 
