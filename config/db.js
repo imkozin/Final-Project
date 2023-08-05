@@ -1,18 +1,20 @@
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 
-const db = mongoose.connection
 
-db.on('error', error => console.error(error));
-db.once('open', () => console.log('Connected to Mongoose'));
+// const start = async () => {
+//     try {
+//         await mongoose.connect(process.env.ATLAS_URI, {
+//             useNewUrlParser: true,
+//             useUnifiedTopology: true,
+//         });
+//         console.log('Connected to the MongoDB database');
 
-export const start = async () => {
-    try {
-        await mongoose.connect(process.env.DATABASE_URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        console.log('Connected to the MongoDB database');
-    } catch (e) {
-        console.error('Error connecting to the database', e);
-    }
-}
+//         app.listen(process.env.PORT || 3001, () => {
+//             console.log(`Running on port ${process.env.PORT || 3001}`);
+//         });
+//     } catch (e) {
+//         console.error('Error connecting to the database', e);
+//     }
+// }
+
+// export default start;
