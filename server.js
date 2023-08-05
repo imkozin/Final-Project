@@ -9,7 +9,7 @@ const app = express();
 dotenv.config();
 
 app.use(express.json())
-app.use(urouter)
+app.use('', urouter)
 
 // app.get('/users', (req, res) => {
 //   User.
