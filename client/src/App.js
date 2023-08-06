@@ -1,22 +1,27 @@
 import './App.css';
 import {Routes, Route} from 'react-router-dom';
 import Nav from './components/Navbar';
-import Home from './components/Home';
+import Signup from './components/Signup';
+import Login from './components/Login';
+import Main from './components/Main';
 import Favorites from './components/Favorites';
 
 function App() {
+  const user = localStorage.getItem('token')
   return (
     <>
-    <div className='nav'>
-        <h3>BookFlix</h3>
-        <Nav/>
-    </div>
-    <div className="App">
-        <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/favorites" element={<Favorites/>}/>
-        </Routes>
-    </div>
+      <div className='nav'>
+          <h3>BookFlix</h3>
+          <Nav/>
+      </div>
+      <div className="App">
+          <Routes>
+            {user && <Route path="/main" element={<Main/>}/>}
+            <Route path="/register" element={<Signup/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/favorites" element={<Favorites/>}/>
+          </Routes>
+      </div>
     </>
   );
 }

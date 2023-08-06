@@ -1,13 +1,13 @@
 import { TextField } from "@mui/material";
 
 
-const Home = () => {
+const Main = () => {
     return (
         <>
-            <h1>Home</h1>
+            <h1>Main</h1>
             <TextField id="book" label="Book Title or Author" variant="outlined" />
         </>
     )
 }
 
-export default Home;
+export default Main;

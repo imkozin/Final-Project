@@ -14,9 +14,9 @@ export const login = async (req, res) => {
             return res.status(401).json({msg:'Invalid password'});
         }
 
-        generateToken(user);
+        const token = generateToken(user);
 
-        return res.status(200).json(user);
+        return res.status(200).json({user, token, msg: "Logged In successfully"});
     } catch (err) {
         console.log(err);
         res.status(500).json({msg : 'Something went wrong!'})
