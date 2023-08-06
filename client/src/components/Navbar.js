@@ -10,22 +10,22 @@ const Nav = () => {
 
     const logout = async () => {
         localStorage.removeItem('token');
-        window.location.reload();
-        navigate('/login');
         setIsLoggedIn(false);
+        // window.location.reload();
+        navigate('/login');
     }
 
     return (
         <>
             <div>
                 <Button component={Link} to="/main">Home</Button>
-                {!isLoggedIn && (<Button component={Link} to="/register">Sign Up</Button>)}
-                {!isLoggedIn && (<Button component={Link} to="/login">Login</Button>)}
-                {isLoggedIn && <Button component={Link} to="/favorites">Favorites</Button>}
-                {isLoggedIn && (
+                {isLoggedIn ? <Button component={Link} to="/register">Sign Up</Button> : <></>}
+                {isLoggedIn ? <Button component={Link} to="/login">Login</Button> : <></>}
+                {isLoggedIn ? <></> : <Button component={Link} to="/favorites">Favorites</Button>}
+                {isLoggedIn ? <></> :
                 <Button onClick={logout}>
-                    Logout
-                </Button>)}
+                    Log Out
+                </Button>}
             </div>
         </>
     )
