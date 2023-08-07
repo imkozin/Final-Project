@@ -16,7 +16,7 @@ function App() {
       </div>
       <div className="App">
           <Routes>
-            {user && <Route path="/main" element={<Main/>}/>}
+          <Route path="/main" element={<Main/>}/>
             <Route path="/register" element={<Signup/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/favorites" element={<Favorites/>}/>
