@@ -6,12 +6,13 @@ import Login from './components/Login';
 import Main from './components/Main';
 import Favorites from './components/Favorites';
 
+
 function App() {
   const user = localStorage.getItem('token')
   return (
     <>
       <div className='nav'>
-          <h3>BookFlix</h3>
+          <h3>BOOKFLIX</h3>
           <Nav/>
       </div>
       <div className="App">

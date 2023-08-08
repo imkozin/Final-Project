@@ -1,7 +1,8 @@
 import jwt_decode from 'jwt-decode';
 import { TextField } from "@mui/material";
+import BookList from './BookList';
+import {useState,useEffect} from "react";
 
-import {useState,useEffect} from "react"
 const Main = () => {
         const [isLoggedIn, setIsLoggedIn] = useState();
         useEffect(() => {
@@ -20,6 +21,7 @@ const Main = () => {
                 <h2>Welcome {isLoggedIn}</h2>
             )}
             <TextField id="book" label="Book Title or Author" variant="outlined" />
+            <BookList/>
         </>
     )
 }
