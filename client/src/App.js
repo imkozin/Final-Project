@@ -4,7 +4,7 @@ import Nav from './components/Navbar';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Main from './components/Main';
-import Favorites from './components/Favorites';
+import Favorites from './components/AppContext';
 
 
 function App() {

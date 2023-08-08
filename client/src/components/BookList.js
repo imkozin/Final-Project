@@ -5,11 +5,16 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
+import { useAppContext } from "./AppContext";
 
 const BookList = () => {
     const URL = 'https://example-data.draftbit.com/books?';
     
     const [books, setBooks] = useState([]);
+
+    const { favorites, addToFavorites, removeFromFavorites} = useAppContext();
+
+    console.log('favorites are', favorites);
 
     useEffect(() => {
         getBooks();
@@ -42,7 +47,7 @@ const BookList = () => {
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
-                        <Button size="small" color="primary">
+                        <Button size="small" color="primary" onClick={()=> addToFavorites(book)}>
                         Add to Favorites
                         </Button>
                     </CardActions>
