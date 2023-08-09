@@ -1,17 +1,17 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Book = () => {
-    const URL = 'https://example-data.draftbit.com/books';
+const API_URL = 'https://example-data.draftbit.com/books';
 
+const Book = () => {
     const [book, setBook] = useState([]);
 
     const { id } = useParams();
     
     const getBook = async () => {
         try {
-            const res = await axios.get(`${URL}/${id}`);
+            const res = await axios.get(`${API_URL}/${id}`);
             console.log(res);
             setBook(res.data);
         } catch (err) {

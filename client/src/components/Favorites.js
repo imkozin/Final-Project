@@ -3,17 +3,44 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
-import { useAppContext } from "./AppContext";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppContext } from './AppContext';
+import { getCurrentUser } from '../helpers/utils';
 
 const Favorites = () => {
-    const { favorites, addToFavorites, removeFromFavorites} = useAppContext();
+    const { favorites, setFavorites } = useAppContext()
+    const username = getCurrentUser();
+    const favoritesKey = `favoritesOf${username}`;
+
+    useEffect(() => {
+        const storedFavorites = localStorage.getItem(favoritesKey);
+        if (storedFavorites) {
+            setFavorites(JSON.parse(storedFavorites));
+        }
+    }, []);
+
+    const navigate = useNavigate();
+
+    const addToFavorites = (book) => {
+        const oldFavorites = [...favorites];
+        const newFavorites = oldFavorites.concat(book);
+        localStorage.setItem(favoritesKey, JSON.stringify(newFavorites));
+        setFavorites(newFavorites);
+    };
+
+    const removeFromFavorites = (id) => {
+        const oldFavorites = [...favorites];
+
+        const newFavorites = oldFavorites.filter((book) => book.id !== id);
+        localStorage.setItem(favoritesKey, JSON.stringify(newFavorites));
+        setFavorites(newFavorites);
+    }
 
     const checkFavorite = (id) => {
         const isFavorite = favorites.some((book) => book.id === id);
         return isFavorite;
     }
-
-
 
     return (
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
@@ -25,7 +52,7 @@ const Favorites = () => {
                         component="img"
                         image={book.image_url}
                         alt="book cover"
-                        />
+                        onClick={() => navigate(`/book/${book.id}`)}/>
                         <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
                             {book.title}

@@ -3,18 +3,19 @@ import { TextField } from "@mui/material";
 import BookList from './BookList';
 import {useState,useEffect} from "react";
 
-
 const Main = () => {
-        const [isLoggedIn, setIsLoggedIn] = useState();
-        useEffect(() => {
-            const token = localStorage.getItem('token');
+    const [isLoggedIn, setIsLoggedIn] = useState();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
             if (token) {
                 const username = jwt_decode(token).name;
                 setIsLoggedIn(username);
             } else {
                 setIsLoggedIn(false);
-            }
-        }, []);
+            } 
+    }, []);
+
     return (
         <>
             <h1>Main</h1>

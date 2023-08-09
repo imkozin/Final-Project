@@ -18,7 +18,7 @@ const Login = () => {
                 const { token } = res.data;
                 localStorage.setItem('token', token);
                 const data = await res.data;
-                console.log(data);
+                console.log("user data=>", data);
                 navigate('/main');
             } else {
                 setError('Invalid credentials');

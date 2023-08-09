@@ -1,4 +1,5 @@
-import { useState, useContext, useEffect, useCallback, createContext } from "react";
+import { useState, useContext, createContext } from "react";
+import { TailSpin } from 'react-loader-spinner';
 
 const AppContext = createContext();
 
@@ -12,24 +13,21 @@ export const useAppContext = () => {
     }
 }
 
+export const Loading = () => {
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <TailSpin color="#00BFFF" height={80} width={80} />
+        </div>
+        )
+}
+
+
 const AppContextProvider = ({children}) => {
     const [favorites, setFavorites] = useState([]);
-
-    const addToFavorites = (book) => {
-        const oldFavorites = [...favorites];
-        const newFavorites = oldFavorites.concat(book);
-        setFavorites(newFavorites);
-    };
-
-    const removeFromFavorites = (id) => {
-        const oldFavorites = [...favorites];
-
-        const newFavorites = oldFavorites.filter((book) => book.id !== id);
-        setFavorites(newFavorites);
-    }
+    const [isLoading, setIsLoading] = useState(true);
 
     return (
-        <AppContext.Provider value={{ favorites, addToFavorites, removeFromFavorites}}>
+        <AppContext.Provider value={{ isLoading, setIsLoading, favorites, setFavorites }}>
             {children}
         </AppContext.Provider>
     )
