@@ -1,49 +1,30 @@
-import { useEffect, useState } from "react";
-import axios from 'axios';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import { useAppContext } from "./AppContext";
-import { useNavigate } from 'react-router-dom';
 
-const BookList = () => {
-    const URL = 'https://example-data.draftbit.com/books?';
-    
-    const [books, setBooks] = useState([]);
+const Favorites = () => {
     const { favorites, addToFavorites, removeFromFavorites} = useAppContext();
-
-    const navigate = useNavigate();
 
     const checkFavorite = (id) => {
         const isFavorite = favorites.some((book) => book.id === id);
         return isFavorite;
     }
 
-    useEffect(() => {
-        getBooks();
-    }, [])
 
-    const getBooks = async () => {
-        try {
-            const res = await axios.get(URL);
-            console.log(res);
-            setBooks(res.data);
-        } catch (err) {
-            console.log(err.response.data.msg);
-        }
-    }
 
-    return(
-        <div  style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
-            {books.map((book) => (
+    return (
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+            {favorites.length > 0 ? 
+                favorites.map((book) => (
                 <Card key={book.id} sx={{ maxWidth: 345 }}>
                     <CardActionArea>
                         <CardMedia
                         component="img"
                         image={book.image_url}
-                        alt="book cover" onClick={() => navigate(`/book/${book.id}`)}
+                        alt="book cover"
                         />
                         <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
@@ -60,9 +41,9 @@ const BookList = () => {
                         </Button>}
                     </CardActions>
                 </Card>
-                ))}
+                ))  : <h1>You don't have any favorite books yet</h1>}
         </div>
     )
 }
 
-export default BookList;
+export default Favorites;
