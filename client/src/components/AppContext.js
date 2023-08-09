@@ -1,5 +1,4 @@
 import { useState, useContext, createContext } from "react";
-import { TailSpin } from 'react-loader-spinner';
 
 const AppContext = createContext();
 
@@ -13,21 +12,17 @@ export const useAppContext = () => {
     }
 }
 
-export const Loading = () => {
-    return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <TailSpin color="#00BFFF" height={80} width={80} />
-        </div>
-        )
-}
-
 
 const AppContextProvider = ({children}) => {
     const [favorites, setFavorites] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [isLoading, setIsLoading] = useState(true);
+    const [movie, setMovie] = useState([]);
+    const [book, setBook] = useState([]);
+    const [books, setBooks] = useState([]);
 
     return (
-        <AppContext.Provider value={{ isLoading, setIsLoading, favorites, setFavorites }}>
+        <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn, isLoading, setIsLoading, favorites, setFavorites, movie, setMovie, book, setBook, books, setBooks }}>
             {children}
         </AppContext.Provider>
     )

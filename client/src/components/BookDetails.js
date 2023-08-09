@@ -1,23 +1,28 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useAppContext } from "./AppContext";
+import Movie from "./Movie";
 
-const API_URL = 'https://example-data.draftbit.com/books';
+const BOOK_URL = 'https://example-data.draftbit.com/books';
+
 
 const Book = () => {
-    const [book, setBook] = useState([]);
+    const {book, setBook} = useAppContext()
 
     const { id } = useParams();
     
     const getBook = async () => {
         try {
-            const res = await axios.get(`${API_URL}/${id}`);
+            const res = await axios.get(`${BOOK_URL}/${id}`);
             console.log(res);
             setBook(res.data);
         } catch (err) {
             console.log(err.response.data.msg);
         }
     };
+
+    console.log("book", typeof book.title);
 
     useEffect(() => {
         getBook();
@@ -36,6 +41,9 @@ const Book = () => {
                 <p>{book?.authors}</p>
                 <h2>Genre</h2>
                 <p>{book?.genres}</p>
+            </div>
+            <div>
+                <Movie book={book}/>
             </div>
         </div>
     )

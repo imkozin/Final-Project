@@ -9,14 +9,14 @@ import { Button, CardActionArea, CardActions } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
 import { useNavigate } from 'react-router-dom';
-import { useAppContext, Loading } from "./AppContext";
+import { useAppContext } from "./AppContext";
 import { getCurrentUser } from "../helpers/utils";
+import Loading from "./Loading";
 
 const BASE_URL = 'https://example-data.draftbit.com/books?';
 
 const BookList = () => {
-    const [books, setBooks] = useState([]);
-    const { favorites, setFavorites, isLoading, setIsLoading } = useAppContext();
+    const { books, setBooks, favorites, setFavorites, isLoading, setIsLoading } = useAppContext();
     const username = getCurrentUser();
     const favoritesKey = `favoritesOf${username}`;
 

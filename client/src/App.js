@@ -24,11 +24,13 @@ function App() {
             <Route path="/main" element={<AppContextProvider>
               <Main/>
             </AppContextProvider>
-          }/>
+            }/>
             <Route path="/favorites" element={<AppContextProvider>
               <Favorites/>
             </AppContextProvider>}/>
-            <Route path="/book/:id" element={<Book/>}/>
+            <Route path="/book/:id" element={<AppContextProvider>
+              <Book/>
+            </AppContextProvider>}/>
             <Route path="/register" element={<Signup/>}/>
             <Route path="/login" element={<Login/>}/>
           </Routes>

@@ -6,6 +6,6 @@ export const getCurrentUser = () => {
             const username = jwt_decode(token).name;
             return username;
         } else {
-            throw new Error('Please log in')
+            console.log('You are not logged in')
         } 
 }
