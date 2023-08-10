@@ -20,9 +20,11 @@ const AppContextProvider = ({children}) => {
     const [movie, setMovie] = useState([]);
     const [book, setBook] = useState([]);
     const [books, setBooks] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const [searchResult, setSearchResult] = useState('');
 
     return (
-        <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn, isLoading, setIsLoading, favorites, setFavorites, movie, setMovie, book, setBook, books, setBooks }}>
+        <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn, isLoading, setIsLoading, favorites, setFavorites, movie, setMovie, book, setBook, books, setBooks, searchText, setSearchText, searchResult, setSearchResult }}>
             {children}
         </AppContext.Provider>
     )

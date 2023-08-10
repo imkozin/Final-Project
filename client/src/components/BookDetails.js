@@ -41,6 +41,7 @@ const Book = () => {
                 <p>{book?.authors}</p>
                 <h2>Genre</h2>
                 <p>{book?.genres}</p>
+                <p><b>Pages: </b>{book?.num_pages}</p>
             </div>
             <div>
                 <Movie book={book}/>

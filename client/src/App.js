@@ -6,7 +6,6 @@ import Login from './components/Login';
 import Main from './components/Main';
 import Favorites from './components/Favorites';
 import Book from './components/BookDetails';
-import { createContext } from "react";
 import AppContextProvider from './components/AppContext';
 
 
@@ -23,8 +22,7 @@ function App() {
           <Routes>
             <Route path="/main" element={<AppContextProvider>
               <Main/>
-            </AppContextProvider>
-            }/>
+            </AppContextProvider>}/>
             <Route path="/favorites" element={<AppContextProvider>
               <Favorites/>
             </AppContextProvider>}/>

@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useAppContext } from "./AppContext";
 import axios from "axios";
-import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
 
 const Movie = ({book}) => {
     const { movie, setMovie } = useAppContext();
@@ -13,7 +14,7 @@ const Movie = ({book}) => {
     }, [book]);
 
     const getMovie = async () => {
-        if (!book) {
+        if (!book || !book.title) {
             return;
         }
         const bookString = book['title'].split(" ");
@@ -23,7 +24,8 @@ const Movie = ({book}) => {
             const res = await axios.get(MOVIE_URL);
             const data = res.data; 
             if (data.results.length > 0) {
-                setMovie(data.results);
+                const sortedData = data.results.sort((a, b) => b.popularity - a.popularity).slice(0, 5);
+                setMovie(sortedData);
             } else {
                 setMovie([]);
             }
@@ -35,21 +37,21 @@ const Movie = ({book}) => {
     
 
     return (
-            <div>
-            {movie.length > 0 ? (
-                movie.map((movie) => (
-                    <div key={movie.id}>
-                        <h1>{movie.title}</h1>
-                        <img src={movie.poster_path === null ? "https://www.csaff.org/wp-content/uploads/csaff-no-poster.jpg" :`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt="POSTER"/>
-                        <p>Release Date: {movie?.release_date}</p>
-                    </div>
+        <Carousel width={'250px'}>
+                {movie.length > 0 ? (
+                    movie.map((movie) => (
+                        <div key={movie.id}>
+                            <h1>{movie.title}</h1>
+                            <img src={movie.poster_path === null ? "https://www.csaff.org/wp-content/uploads/csaff-no-poster.jpg" : `https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt="POSTER"/>
+                            <p>Release Date: {movie?.release_date}</p>
+                        </div>
                     ))
                 ) : (
                     <div>
                         <h1>Sorry! Movie not found!</h1>
                     </div>
                 )}
-            </div>
+        </Carousel>
     )
 }
 
