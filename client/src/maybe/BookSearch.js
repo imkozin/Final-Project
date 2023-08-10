@@ -1,5 +1,5 @@
-import { useAppContext } from "./AppContext";
-import Loading from "./Loading";
+import { useAppContext } from "../components/AppContext";
+import Loading from "../components/Loading";
 import { Link } from "react-router-dom";
 
 const Searching = () => {

@@ -1,5 +1,6 @@
 import jwt_decode from 'jwt-decode';
 
+
 export const getCurrentUser = () => {
     const token = localStorage.getItem('token');
         if (token) {
@@ -9,3 +10,4 @@ export const getCurrentUser = () => {
             console.log('You are not logged in')
         } 
 }
+
