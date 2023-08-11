@@ -1,16 +1,14 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import urouter from './routes/user-routes.js'
+import router from './routes/routes.js'
 import cors from 'cors';
 import mongoose from 'mongoose';
-
 
 const app = express();
 dotenv.config();
 
 app.use(express.json())
 app.use(cors());
-
 
 mongoose.connect(process.env.ATLAS_URI, {
   useNewUrlParser: true,
@@ -25,5 +23,5 @@ app.listen(process.env.PORT || 3001, ()=>{
     console.log(`Server running on PORT ${process.env.PORT || 3001}`);
   })
 
-app.use('', urouter)
+app.use('', router)
 

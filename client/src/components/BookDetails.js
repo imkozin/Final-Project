@@ -42,6 +42,13 @@ const Book = () => {
                 <p><b>Genre: </b>{book?.genres}</p>
                 <p><b>Pages: </b>{book?.num_pages}</p>
                 <p>{book?.description}</p>
+
+                <form>
+                    Title: <input type="text"/>
+                    Review: <textarea />
+                    <button>Post</button>
+                </form>
+
             </div>
             <div>
                 <Movie book={book}/>
