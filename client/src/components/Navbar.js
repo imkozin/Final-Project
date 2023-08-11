@@ -28,10 +28,11 @@ const Nav = () => {
     return (
         <>
             <div>
-                <Button component={Link} to="/main">Home</Button>
+                <Button component={Link} to="/main">BookFlix</Button>
                 {isLoggedIn ? (
                     <>
-                        <Button component={Link} to="/favorites">Favorite Books</Button>
+                        <Button component={Link} to="/books">Books</Button>
+                        <Button component={Link} to="/favorites">My List</Button>
                         <Button onClick={logout}>
                             Log Out
                         </Button>

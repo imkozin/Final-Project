@@ -18,7 +18,7 @@ const Classic = ({ title }) => {
             console.log(res);
             if (res.data.length > 0) {
                 const genre = res.data.filter(book => book.genres.includes('Classics'));
-                const sortedData = genre.sort((a, b) => b.rating_count - a.rating_count).slice(0, 21);
+                const sortedData = genre.sort((a, b) => b.rating - a.rating).slice(0, 21);
                 console.log(sortedData);
                 setClassic(sortedData);
             }

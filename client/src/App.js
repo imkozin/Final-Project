@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Main from './components/Main';
 import Favorites from './components/Favorites';
 import Book from './components/BookDetails';
+import BookList from './components/BookList';
 import AppContextProvider from './components/AppContext';
 
 
@@ -14,14 +15,16 @@ function App() {
 
   return (
     <>
-      <div className='nav'>
-          <h3>BOOKFLIX</h3>
-          <Nav/>
-      </div>
+          <div className='nav'>
+              <Nav/>
+          </div>
       <div className="App">
           <Routes>
             <Route path="/main" element={<AppContextProvider>
               <Main/>
+            </AppContextProvider>}/>
+            <Route path="/books" element={<AppContextProvider>
+              <BookList/>
             </AppContextProvider>}/>
             <Route path="/favorites" element={<AppContextProvider>
               <Favorites/>

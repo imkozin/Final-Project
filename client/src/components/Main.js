@@ -1,5 +1,4 @@
 import jwt_decode from 'jwt-decode';
-import BookList from './BookList';
 import { useEffect } from "react";
 import { useAppContext } from './AppContext';
 import Popular from './Popular';
@@ -27,20 +26,29 @@ const Main = () => {
 
     return (
         <>
-            {isLoggedIn && (
-            <h1>
-                Welcome to BOOKFLIX
-            </h1>
+            {isLoggedIn ? (
+            <div>
+                <Popular title="Popular on Bookflix"/>
+                <Trending title="Trending Now"/>
+                <Gems title={`Top Picks for ${isLoggedIn}`}/>
+                <Thriller title="Thrillers"/>
+                <Romance title="Romance"/>
+                <Classic title="Classics"/>
+                <Historical title="History"/>
+                <Fiction title="Science Fiction"/>
+            </div>
+            ) : (
+            <div>
+                <Popular title="Popular on Bookflix"/>
+                <Trending title="Trending Now"/>
+                <Gems title="Top Rated"/>
+                <Thriller title="Thrillers"/>
+                <Romance title="Romance"/>
+                <Classic title="Classics"/>
+                <Historical title="History"/>
+                <Fiction title="Science Fiction"/>
+            </div>
             )}
-            {/* <BookList/> */}
-            <Popular title="Popular on Bookflix"/>
-            <Trending title="Trending Now"/>
-            <Gems title={`Top Picks for ${isLoggedIn}`}/>
-            <Thriller title="Thrillers"/>
-            <Romance title="Romance"/>
-            <Classic title="Classics"/>
-            <Historical title="History"/>
-            <Fiction title="Science Fiction"/>
         </>
     )
 }
