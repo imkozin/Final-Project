@@ -7,9 +7,10 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from './AppContext';
 import { getCurrentUser } from '../helpers/utils';
+import Loading from './Loading';
 
-const Favorites = () => {
-    const { favorites, setFavorites } = useAppContext()
+const Favorites = ({title}) => {
+    const { favorites, setFavorites, isLoading, setIsLoading } = useAppContext()
     const username = getCurrentUser();
     const favoritesKey = `favoritesOf${username}`;
 
@@ -43,34 +44,35 @@ const Favorites = () => {
     }
 
     return (
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
-            {favorites.length > 0 ? 
-                favorites.map((book) => (
-                <Card key={book.id} sx={{ maxWidth: 345 }}>
-                    <CardActionArea>
-                        <CardMedia
-                        component="img"
-                        image={book.image_url}
-                        alt="book cover"
-                        onClick={() => navigate(`/book/${book.id}`)}/>
-                        <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            {book.title}
-                        </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                        {checkFavorite(book.id) ? <Button size="small" color="primary" onClick={()=> removeFromFavorites(book.id)}>
-                        Remove from Favorites
-                        </Button> :
-                        <Button size="small" color="primary" onClick={()=> addToFavorites(book)}>
-                        Add to Favorites
-                        </Button>}
-                    </CardActions>
-                </Card>
-                ))  : <h1>You don't have any favorite books yet</h1>}
-        </div>
-    )
-}
+        <>
+            {isLoading ? (
+                <Loading />
+            ) : (
+                <>
+                    <div style={{ textAlign: "start" }}>
+                        <h1>{title}</h1>
+                    </div>
+                    <div style={{ display: 'flex', flexWrap: 'nowrap', overflowX: 'auto', border: "5px solid black", height: "320px" }}>
+                        {favorites.length > 0 ? 
+                            favorites.map((book) => (
+                                <div key={book.id} style={{ margin: '5px 10px' }}>
+                                    <img src={book.image_url} alt={book.title} style={{ width: "200px", height: "300px", cursor: "pointer" }} onClick={() => navigate(`/book/${book.id}`)} />
+                                    {/* {checkFavorite(book.id) ? 
+                                        <Button size="small" color="primary" onClick={() => removeFromFavorites(book.id)}>
+                                            Remove from Favorites
+                                        </Button> :
+                                        <Button size="small" color="primary" onClick={() => addToFavorites(book)}>
+                                            Add to Favorites
+                                        </Button>
+                                    } */}
+                                </div>
+                            ))  : <h1>You don't have any favorite books yet</h1>
+                        }
+                    </div>
+                </>
+            )}
+        </>
+    );
+}    
 
 export default Favorites;

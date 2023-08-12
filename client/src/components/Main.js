@@ -9,9 +9,10 @@ import Romance from './Romance';
 import Classic from './Classics';
 import Historical from './Historical';
 import Fiction from './Fiction';
+import Favorites from './Favorites';
 
 const Main = () => {
-    const {isLoggedIn, setIsLoggedIn } = useAppContext();
+    const {isLoggedIn, setIsLoggedIn, favorites } = useAppContext();
 
     useEffect(() => {
 
@@ -28,6 +29,8 @@ const Main = () => {
         <>
             {isLoggedIn ? (
             <div>
+                {favorites.length > 0 ?
+                <Favorites title="My list"/> : <></>}
                 <Popular title="Popular on Bookflix"/>
                 <Trending title="Trending Now"/>
                 <Gems title={`Top Picks for ${isLoggedIn}`}/>

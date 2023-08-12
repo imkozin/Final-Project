@@ -4,14 +4,21 @@ import axios from "axios";
 import { useAppContext } from "./AppContext";
 import Movie from "./Movie";
 import Loading from "./Loading";
+import { getCurrentUser } from "../helpers/utils";
+import { Button } from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
 
 const BOOK_URL = 'https://example-data.draftbit.com/books';
 
 const Book = () => {
-    const {book, setBook, isLoading, setIsLoading} = useAppContext()
+    const {book, setBook, favorites, setFavorites, isLoading, setIsLoading} = useAppContext()
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
     const [error, setError] = useState('');
+
+    const username = getCurrentUser();
+    const favoritesKey = `favoritesOf${username}`;
 
     const { id } = useParams();
     
@@ -67,6 +74,26 @@ const Book = () => {
             }
         }
     };
+
+    const addToFavorites = (book) => {
+        const oldFavorites = [...favorites];
+        const newFavorites = oldFavorites.concat(book);
+        localStorage.setItem(favoritesKey, JSON.stringify(newFavorites));
+        setFavorites(newFavorites);
+    };
+
+    const removeFromFavorites = (id) => {
+        const oldFavorites = [...favorites];
+
+        const newFavorites = oldFavorites.filter((book) => book.id !== id);
+        localStorage.setItem(favoritesKey, JSON.stringify(newFavorites));
+        setFavorites(newFavorites);
+    }
+
+    const checkFavorite = (id) => {
+        const isFavorite = favorites.some((book) => book.id === id);
+        return isFavorite;
+    }
     
 
     return(
@@ -80,6 +107,12 @@ const Book = () => {
                 <p><b>Genre: </b>{book?.genres}</p>
                 <p><b>Pages: </b>{book?.num_pages}</p>
                 <p>{book?.description}</p>
+                {checkFavorite(book.id) ? <Button size="small" color="primary" onClick={()=> removeFromFavorites(book.id)}>
+                        Don't Like <HeartBrokenIcon/>
+                        </Button> :
+                        <Button size="small" color="primary" onClick={()=> addToFavorites(book)}>
+                        Like <FavoriteIcon/>
+                        </Button>}
 
                 <form onSubmit={submitReview}>
                     Title: <input type="text"         name="title"

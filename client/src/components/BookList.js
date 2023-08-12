@@ -5,19 +5,15 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
+
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from "./AppContext";
-import { getCurrentUser } from "../helpers/utils";
 import Loading from "./Loading";
 
 const BASE_URL = 'https://example-data.draftbit.com/books?';
 
 const BookList = () => {
     const { books, setBooks, favorites, setFavorites, isLoading, setIsLoading } = useAppContext();
-    const username = getCurrentUser();
-    const favoritesKey = `favoritesOf${username}`;
 
     const navigate = useNavigate();
 
@@ -36,26 +32,6 @@ const BookList = () => {
         } finally {
             setIsLoading(false);
         }
-    }
-
-    const addToFavorites = (book) => {
-        const oldFavorites = [...favorites];
-        const newFavorites = oldFavorites.concat(book);
-        localStorage.setItem(favoritesKey, JSON.stringify(newFavorites));
-        setFavorites(newFavorites);
-    };
-
-    const removeFromFavorites = (id) => {
-        const oldFavorites = [...favorites];
-
-        const newFavorites = oldFavorites.filter((book) => book.id !== id);
-        localStorage.setItem(favoritesKey, JSON.stringify(newFavorites));
-        setFavorites(newFavorites);
-    }
-
-    const checkFavorite = (id) => {
-        const isFavorite = favorites.some((book) => book.id === id);
-        return isFavorite;
     }
 
     return (
@@ -79,12 +55,7 @@ const BookList = () => {
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
-                        {checkFavorite(book.id) ? <Button size="small" color="primary" onClick={()=> removeFromFavorites(book.id)}>
-                        Don't Like <HeartBrokenIcon/>
-                        </Button> :
-                        <Button size="small" color="primary" onClick={()=> addToFavorites(book)}>
-                        Like <FavoriteIcon/>
-                        </Button>}
+                        
                     </CardActions>
                 </Card>
                 ))}
