@@ -1,10 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from 'axios';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import Search from "./Search";
 
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from "./AppContext";
@@ -14,6 +10,7 @@ const BASE_URL = 'https://example-data.draftbit.com/books?';
 
 const BookList = () => {
     const { books, setBooks, favorites, setFavorites, isLoading, setIsLoading } = useAppContext();
+    const [searchItem, setSearchItem] = useState('');
 
     const navigate = useNavigate();
 
@@ -34,35 +31,36 @@ const BookList = () => {
         }
     }
 
+    const searchBook = (inputValue) => {
+        const trimmedInput = inputValue.trim(); // Trim the input value
+        const filteredBooks = books.filter(book => {
+            return book.title.toLowerCase().includes(trimmedInput.toLowerCase());
+        });
+        setBooks(filteredBooks);
+    }
+    
+
     return (
         <>
-        { isLoading ? (
-            <Loading /> 
+            {isLoading ? (
+                <Loading /> 
             ) : (
-        <div  style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
-                {books.map((book) => (
-                <Card key={book.id} sx={{ maxWidth: 345 }}>
-                    <CardActionArea>
-                        <CardMedia
-                        component="img"
-                        image={book.image_url}
-                        alt="book cover" onClick={() => navigate(`/book/${book.id}`)}
-                        />
-                        <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            {book.title}
-                        </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                        
-                    </CardActions>
-                </Card>
-                ))}
-            </div>
-         )}
+                <>
+                    <Search searchChange={searchBook}/>
+                    <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                            {books.map((book) => (
+                                <div key={book.id} style={{ margin: '5px 10px' }}>
+                                    <img src={book.image_url} alt={book.title} style={{ width: "200px", height: "300px", cursor: "pointer" }} onClick={() => navigate(`/book/${book.id}`)} />
+                                    <h3>{book.title}</h3>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </>
+            )}
         </>
-    )
+    );
 }
 
 export default BookList;

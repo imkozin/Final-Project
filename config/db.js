@@ -18,3 +18,16 @@
 // }
 
 // export default start;
+
+// async function start() {
+//     try {
+//         await mongoose.connect(
+//             `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.pbuqiqy.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`,
+//         )
+
+//         app.listen(PORT, () => console.log(`Server started on port: ${PORT}`))
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+// start()
