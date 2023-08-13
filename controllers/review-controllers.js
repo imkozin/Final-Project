@@ -25,3 +25,25 @@ export const addReview = async (req, res) => {
         res.status(500).json({ msg: "An error occurred while submitting the review" });
     }
 };
+
+export const getReviews = async (req, res) => {
+    await Review
+        .find()
+        .sort({author: 1})
+        .then((reviews) => {
+            res.status(200).json(reviews)
+        })
+}
+
+export const getReview = async (req, res) => {
+    try {
+        await Review
+            .findOne({book_id})
+            .then((review) => {
+                res.status(200).json(review)
+            })
+    } catch (err) {
+        console.error(err);
+    }
+}
+
