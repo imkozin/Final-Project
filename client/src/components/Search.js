@@ -9,7 +9,6 @@ const Search = ({ searchChange }) => {
 
     const handleInput = (e) => {
         const input = e.target.value;
-        console.log("input", input);
         setSearchQuery(input);
         return searchChange(input);
     }
