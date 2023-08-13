@@ -9,15 +9,10 @@ import Loading from "./Loading";
 const BASE_URL = 'https://example-data.draftbit.com/books?';
 
 const BookList = () => {
-    const { books, setBooks, favorites, setFavorites, isLoading, setIsLoading } = useAppContext();
-    const [searchItem, setSearchItem] = useState('');
+    const { books, setBooks, isLoading, setIsLoading } = useAppContext();
+    const [searchItems, setSearchItems] = useState([]);
 
     const navigate = useNavigate();
-
-    useEffect(() => {
-        setIsLoading(true);
-        getBooks();
-    }, [])
 
     const getBooks = async () => {
         try {
@@ -31,14 +26,23 @@ const BookList = () => {
         }
     }
 
-    const searchBook = (inputValue) => {
-        const trimmedInput = inputValue.trim(); // Trim the input value
-        const filteredBooks = books.filter(book => {
-            return book.title.toLowerCase().includes(trimmedInput.toLowerCase());
-        });
-        setBooks(filteredBooks);
+    useEffect(() => {
+        setIsLoading(true);
+        getBooks();
+    }, [])
+
+    const searchBook = (searchQuery) => {
+        const trimmedQuery = searchQuery.trim().toLowerCase();
+        if (trimmedQuery === '') {
+            return;
+        } else {
+            setSearchItems(books.filter(book => {
+                const title = book.title.toLowerCase().includes(trimmedQuery);
+                const author = book.authors.toLowerCase().includes(trimmedQuery);
+                return title || author;
+            }))
+        }
     }
-    
 
     return (
         <>
@@ -48,14 +52,21 @@ const BookList = () => {
                 <>
                     <Search searchChange={searchBook}/>
                     <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                    {searchItems.length ? 
                         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                            {books.map((book) => (
+                            {searchItems.map((book) => (
                                 <div key={book.id} style={{ margin: '5px 10px' }}>
                                     <img src={book.image_url} alt={book.title} style={{ width: "200px", height: "300px", cursor: "pointer" }} onClick={() => navigate(`/book/${book.id}`)} />
-                                    <h3>{book.title}</h3>
                                 </div>
                             ))}
-                        </div>
+                        </div> : 
+                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        {books.map((book) => (
+                            <div key={book.id} style={{ margin: '5px 10px' }}>
+                                <img src={book.image_url} alt={book.title} style={{ width: "200px", height: "300px", cursor: "pointer" }} onClick={() => navigate(`/book/${book.id}`)} />
+                            </div>
+                        ))}
+                    </div>}
                     </div>
                 </>
             )}

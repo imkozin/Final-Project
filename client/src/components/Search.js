@@ -5,19 +5,20 @@ import { useState } from 'react';
 
 
 const Search = ({ searchChange }) => {
-    const [searchInput, setSearchInput] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleInput = (e) => {
         const input = e.target.value;
-        setSearchInput(input); // Update the local searchInput state
-        searchChange(input);  // Call the searchChange prop with the input value
+        console.log("input", input);
+        setSearchQuery(input);
+        return searchChange(input);
     }
 
     return (
         <TextField
             label="Search Book"
             variant="outlined"
-            value={searchInput}
+            value={searchQuery}
             onChange={handleInput}
         />
     );

@@ -30,7 +30,7 @@ const Main = () => {
             {isLoggedIn ? (
             <div>
                 {favorites.length > 0 ?
-                <Favorites title="My list"/> : <></>}
+                <Favorites title="My List"/> : <></>}
                 <Popular title="Popular on Bookflix"/>
                 <Trending title="Trending Now"/>
                 <Gems title={`Top Picks for ${isLoggedIn}`}/>
