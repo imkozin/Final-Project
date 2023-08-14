@@ -9,16 +9,17 @@ const BASE_URL = 'https://example-data.draftbit.com/books?';
 const Popular = ({ title }) => {
     const [popular, setPopular] = useState([]);
     const { isLoading, setIsLoading } = useAppContext();
+    const [page, setPage] = useState(1);
 
     const navigate = useNavigate();
 
     const getPopular = async () => {
         try {
-            const res = await axios.get(BASE_URL);
+            const res = await axios.get(`${BASE_URL}_page=${page}&_limit=10`);
             console.log(res);
             if (res.data.length > 0) {
-                const sortedData = res.data.sort((a, b) => b.review_count - a.review_count).slice(0, 21);
-                setPopular(sortedData);
+                const sortedData = res.data.sort((a, b) => b.review_count - a.review_count);
+                setPopular(prev => [...prev, ...sortedData]);
             }
         } catch (err) {
             console.log(err.response.data.msg);
@@ -29,8 +30,23 @@ const Popular = ({ title }) => {
 
     useEffect(() => {
         setIsLoading(true);
-        getPopular();
-    }, []);
+        getPopular(page);
+    }, [page]);
+
+
+    const handleScroll = () => {
+        if (window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight) {
+            setIsLoading(true);
+            setPage(prev => prev + 1)
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
+
 
     return (
         <>
