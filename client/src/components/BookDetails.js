@@ -11,11 +11,14 @@ import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
 
 const BOOK_URL = 'https://example-data.draftbit.com/books';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL
+
 const Book = () => {
     const {book, setBook, favorites, setFavorites, isLoading, setIsLoading} = useAppContext()
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
     const [error, setError] = useState('');
+    const [reviews, setReviews] = useState([]);
 
     const username = getCurrentUser();
     const favoritesKey = `favoritesOf${username}`;
@@ -35,9 +38,28 @@ const Book = () => {
 
     console.log("book", typeof book.title);
 
+    const getReview = async () => {
+        try {
+            const res = await axios.get(`${BASE_URL}/api/reviews/${id}`);
+            if (res && res.data) {
+                console.log(res);
+                const newReview = res.data;
+                setReviews([...reviews, newReview]);
+                console.log('Server response:', newReview);
+            } else {
+                console.log("No data found in the response.");
+            }
+        } catch (err) {
+            console.log(err.response ? err.response.data.msg : 'Error fetching reviews.');
+        }
+        setIsLoading(false);
+    };
+    
+
     useEffect(() => {
         setIsLoading(true);
         getBook();
+        getReview();
     }, [id]);
 
     const submitReview = async (e) => {
@@ -126,6 +148,22 @@ const Book = () => {
                     onChange={(e) => setText(e.target.value)}/>
                     <button type="submit">Post</button>
                 </form>
+                <div>
+                    <div>
+                        {reviews && reviews.length ? (
+                            reviews.map((rev) => (
+                                <div key={rev.id}>
+                                    <h1>{rev.title}</h1>
+                                    <p>{rev.text}</p>
+                                    <p>{rev.date}</p>
+                                    <p>Posted by: {rev.username}</p>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No reviews available.</p>
+                        )}
+                    </div>
+                </div>
 
             </div>
             <div>

@@ -9,17 +9,16 @@ const BASE_URL = 'https://example-data.draftbit.com/books?';
 const Popular = ({ title }) => {
     const [popular, setPopular] = useState([]);
     const { isLoading, setIsLoading } = useAppContext();
-    const [page, setPage] = useState(1);
 
     const navigate = useNavigate();
 
     const getPopular = async () => {
         try {
-            const res = await axios.get(`${BASE_URL}_page=${page}&_limit=10`);
+            const res = await axios.get(`${BASE_URL}_limit=8`);
             console.log(res);
             if (res.data.length > 0) {
                 const sortedData = res.data.sort((a, b) => b.review_count - a.review_count);
-                setPopular(prev => [...prev, ...sortedData]);
+                setPopular(sortedData); 
             }
         } catch (err) {
             console.log(err.response.data.msg);
@@ -30,14 +29,14 @@ const Popular = ({ title }) => {
 
     useEffect(() => {
         setIsLoading(true);
-        getPopular(page);
-    }, [page]);
+        setPopular([]);
+        getPopular();
+    }, []);
 
 
     const handleScroll = () => {
-        if (window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight) {
-            setIsLoading(true);
-            setPage(prev => prev + 1)
+        if (!isLoading && window.innerHeight + document.documentElement.scrollLeft + 1 >= document.documentElement.scrollWidth) {
+            getPopular()
         }
     }
 
@@ -50,9 +49,6 @@ const Popular = ({ title }) => {
 
     return (
         <>
-        {isLoading ? (
-            <Loading />
-        ) : (
             <>
                 <div style={{ textAlign: "start" }}>
                     <h1>{title}</h1>
@@ -65,7 +61,7 @@ const Popular = ({ title }) => {
                 ))}
                 </div>
             </>
-            )}
+            {isLoading && <Loading/>}
         </>
     );
 };

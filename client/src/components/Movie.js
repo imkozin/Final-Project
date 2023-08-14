@@ -46,8 +46,8 @@ const Movie = ({book}) => {
         <Carousel width={'250px'}>
                 {movie.length > 0 ? (
                     movie.map((movie) => (
-                        <div key={movie.id}>
-                            <img src={movie.poster_path === null ? "https://www.csaff.org/wp-content/uploads/csaff-no-poster.jpg" : `https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt="POSTER"/>
+                        <div key={movie?.id}>
+                            <img src={movie?.poster_path === null ? "https://www.csaff.org/wp-content/uploads/csaff-no-poster.jpg" : `https://image.tmdb.org/t/p/w500/${movie?.poster_path}`} alt="POSTER"/>
                             <p>Release Date: {movie?.release_date}</p>
                         </div>
                     ))
