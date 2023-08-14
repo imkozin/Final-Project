@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import '../styles/Login.css';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL
+
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -13,7 +15,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:3030/login', { email, password });
+            const res = await axios.post(`${BASE_URL}/login`, { email, password });
             if (res.status === 200) {
                 const { token } = res.data;
                 localStorage.setItem('token', token);

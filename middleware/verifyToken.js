@@ -19,6 +19,7 @@ const checkAuth = (req, res, next) => {
                 console.log('Token verification failed:', err.message);
                 return res.status(401).json({ msg: 'Token verification failed' });
             }
+            // console.log('decoded',decoded);
             req.userId = decoded.id;
             next();
         });

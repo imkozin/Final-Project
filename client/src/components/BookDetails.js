@@ -56,7 +56,7 @@ const Book = () => {
             };
     
             console.log('Submitting review...');
-            const res = await axios.post(`http://localhost:3030/api/reviews`, { title, text }, { headers });
+            const res = await axios.post(`http://localhost:3030/api/reviews`, { id, title, text }, { headers });
             if (res.status === 200) {
                 console.log('Review submitted successfully!');
                 const data = await res.data;
@@ -66,7 +66,7 @@ const Book = () => {
                 setError("Review wasn't added");
             }
         } catch (err) {
-            console.error('Error during review submission:', err);
+            console.error('Error during review submission:', err.response.data);
             if (err.response && err.response.data && err.response.data.msg) {
                 setError(err.response.data.msg);
             } else {
