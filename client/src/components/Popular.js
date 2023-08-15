@@ -6,19 +6,26 @@ import { useNavigate } from "react-router-dom";
 
 const BASE_URL = 'https://example-data.draftbit.com/books?';
 
+// ... (other imports and constants)
+
+// ... (other imports and constants)
+
 const Popular = ({ title }) => {
     const [popular, setPopular] = useState([]);
     const { isLoading, setIsLoading } = useAppContext();
+    const [page, setPage] = useState(1);
+    const [initialRender, setInitialRender] = useState(true); // Add this state
 
     const navigate = useNavigate();
 
-    const getPopular = async () => {
+    const getPopular = async (pageNum) => {
+        setIsLoading(true);
         try {
-            const res = await axios.get(`${BASE_URL}`);
+            const res = await axios.get(`${BASE_URL}_page=${pageNum}`);
             console.log(res);
             if (res.data.length > 0) {
                 const sortedData = res.data.sort((a, b) => b.review_count - a.review_count);
-                setPopular(sortedData); 
+                setPopular(prev => [...prev, ...sortedData]);
             }
         } catch (err) {
             console.log(err.response.data.msg);
@@ -27,43 +34,37 @@ const Popular = ({ title }) => {
         }
     };
 
+    const handleLoadMore = () => {
+        setPage(prev => prev + 1);
+    };
+
     useEffect(() => {
-        setIsLoading(true);
-        setPopular([]);
-        getPopular();
-    }, []);
-
-
-    const handleScroll = () => {
-        if (!isLoading && window.innerHeight + document.documentElement.scrollLeft + 1 >= document.documentElement.scrollWidth) {
-            getPopular()
+        if (initialRender) {
+            setInitialRender(false);
+            return;
         }
-    }
-
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [])
-
-
+        getPopular(page);
+    }, [page, initialRender]); 
+    
     return (
         <>
-            <>
-                <div style={{ textAlign: "start" }}>
-                    <h1>{title}</h1>
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'nowrap', overflowX: 'auto', border: "5px solid black", height: "320px"}}>
+            <div style={{ textAlign: "start" }}>
+                <h1>{title}</h1>
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'nowrap', overflowX: 'auto', border: "5px solid black", height: "320px"}}>
                 {popular.map((book) => (
                     <div key={book.id} style={{ margin: '5px 10px' }}>
                         <img src={book.image_url} alt={book.title} style={{width: "200px", height: "300px", cursor: "pointer"}} onClick={() => navigate(`/book/${book.id}`)}/>
                     </div>
                 ))}
-                </div>
-            </>
+                {!isLoading && (
+                    <button style={{ alignSelf: "flex-end" }} onClick={handleLoadMore}>Load More</button>
+                )}
+            </div>
             {isLoading && <Loading/>}
         </>
     );
 };
 
 export default Popular;
+
