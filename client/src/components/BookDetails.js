@@ -19,6 +19,7 @@ const Book = () => {
     const [text, setText] = useState('');
     const [error, setError] = useState('');
     const [reviews, setReviews] = useState([]);
+    const [refresh, setRefresh] = useState(true);
 
     const username = getCurrentUser();
     const favoritesKey = `favoritesOf${username}`;
@@ -26,6 +27,7 @@ const Book = () => {
     const { id } = useParams();
     
     const getBook = async () => {
+        setIsLoading(true);
         try {
             const res = await axios.get(`${BOOK_URL}/${id}`);
             console.log(res);
@@ -36,16 +38,13 @@ const Book = () => {
         setIsLoading(false);
     };
 
-    console.log("book", typeof book.title);
-
     const getReview = async () => {
         try {
             const res = await axios.get(`${BASE_URL}/api/reviews/${id}`);
             if (res && res.data) {
                 console.log(res);
-                const newReview = res.data;
-                setReviews([...reviews, newReview]);
-                console.log('Server response:', newReview);
+                setReviews(res.data);
+                console.log('Server response:', res.data);
             } else {
                 console.log("No data found in the response.");
             }
@@ -55,12 +54,10 @@ const Book = () => {
         setIsLoading(false);
     };
     
-
     useEffect(() => {
-        setIsLoading(true);
         getBook();
         getReview();
-    }, [id]);
+    }, [refresh]);
 
     const submitReview = async (e) => {
     e.preventDefault();
@@ -83,6 +80,7 @@ const Book = () => {
                 console.log('Review submitted successfully!');
                 const data = await res.data;
                 console.log('Server response:', data);
+                setRefresh(refresh?false:true);
             } else {
                 console.log('Review submission failed.');
                 setError("Review wasn't added");
@@ -150,7 +148,7 @@ const Book = () => {
                 </form>
                 <div>
                     <div>
-                        {reviews && reviews.length ? (
+                        {reviews.length > 0 ? (
                             reviews.map((rev) => (
                                 <div key={rev.id}>
                                     <h1>{rev.title}</h1>
@@ -160,7 +158,7 @@ const Book = () => {
                                 </div>
                             ))
                         ) : (
-                            <p>No reviews available.</p>
+                            <p>No reviews yet. Be the first one</p>
                         )}
                     </div>
                 </div>

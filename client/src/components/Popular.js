@@ -14,7 +14,7 @@ const Popular = ({ title }) => {
 
     const getPopular = async () => {
         try {
-            const res = await axios.get(`${BASE_URL}_limit=8`);
+            const res = await axios.get(`${BASE_URL}`);
             console.log(res);
             if (res.data.length > 0) {
                 const sortedData = res.data.sort((a, b) => b.review_count - a.review_count);

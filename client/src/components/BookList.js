@@ -34,7 +34,8 @@ const BookList = () => {
     }, []) 
 
     return (
-        <>            
+        <>       
+            {isLoading && <Loading/>}     
             <input type="search" value={query} onChange={e => setQuery(e.target.value)}/>
             {filteredBooks.length ?
             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
@@ -46,7 +47,6 @@ const BookList = () => {
                     ))}
                 </div>
             </div> : <h1>No Books Found</h1>}
-            {isLoading && <Loading/>}
         </>
     );
 }

@@ -27,20 +27,20 @@ export const addReview = async (req, res) => {
     }
 };
 
-export const getReviews = async (req, res) => {
-    await Review
-        .find()
-        .sort({ date })
-        .then((reviews) => {
-            res.status(200).json(reviews)
-        })
-}
+// export const getReviews = async (req, res) => {
+//     await Review
+//         .find()
+//         .sort({ date })
+//         .then((reviews) => {
+//             res.status(200).json(reviews)
+//         })
+// }
 
 export const getReview = async (req, res) => {
     const book_id = req.params.id;
     try {
         await Review
-            .findOne({book_id})
+            .find({book_id})
             .then((review) => {
                 res.status(200).json(review)
             })
