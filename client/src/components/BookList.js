@@ -34,21 +34,29 @@ const BookList = () => {
     }, []) 
 
     return (
-        <>       
-            {isLoading && <Loading/>}     
-            <input type="search" value={query} onChange={e => setQuery(e.target.value)}/>
-            {filteredBooks.length ?
-            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    {filteredBooks.map((book) => (
-                        <div key={book.id} style={{ margin: '5px 10px' }}>
-                            <img src={book.image_url} alt={book.title} style={{ width: "200px", height: "300px", cursor: "pointer" }} onClick={() => navigate(`/book/${book.id}`)} />
-                        </div>
-                    ))}
-                </div>
-            </div> : <h1>No Books Found</h1>}
-        </>
-    );
+      <>       
+          {isLoading ? (
+              <Loading />
+          ) : (     
+              <>
+                  <input type="search" value={query} onChange={e => setQuery(e.target.value)}/>
+                  {filteredBooks.length ? (
+                      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                              {filteredBooks.map((book) => (
+                                  <div key={book.id} style={{ margin: '5px 10px' }}>
+                                      <img src={book.image_url} alt={book.title} style={{ width: "200px", height: "300px", cursor: "pointer" }} onClick={() => navigate(`/book/${book.id}`)} />
+                                  </div>
+                              ))}
+                          </div>
+                      </div>
+                  ) : (
+                      <h1>No Books Found</h1>
+                  )}
+              </>
+          )}
+      </>
+  );  
 }
 
 export default BookList;

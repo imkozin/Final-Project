@@ -3,8 +3,39 @@ import { useAppContext } from "./AppContext";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Loading from "./Loading";
+import '../styles/Main.css';
+import { styled } from '@mui/system';
+import { Card, IconButton, CardMedia } from '@mui/material';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const BASE_URL = 'https://example-data.draftbit.com/books?';
+
+const Container = styled('div')({
+    display: 'flex',
+    flexWrap: 'nowrap',
+    overflowX: 'auto',
+    height: '330px',
+  });
+  
+  const CardWrapper = styled(Card)({
+    margin: '10px',
+    minWidth: 200,
+    height: 300,
+    cursor: 'pointer',
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: '10px',
+    transition: 'transform 0.2s ease-in-out',
+    '&:hover': {
+      transform: 'scale(1.05)'
+    },
+  });
+  
+  
+  const CardImage = styled(CardMedia)({
+    height: 0,
+    paddingTop: '150%',
+  });
 
 const Classic = ({ title }) => {
     const [classic, setClassic] = useState([]);
@@ -13,13 +44,13 @@ const Classic = ({ title }) => {
     const navigate = useNavigate();
 
     const getClassic = async () => {
+        setIsLoading(true);
         try {
             const res = await axios.get(BASE_URL);
             console.log(res);
             if (res.data.length > 0) {
-                const genre = res.data.filter(book => book.genres.includes('Classics'));
-                const sortedData = genre.sort((a, b) => b.rating - a.rating).slice(0, 21);
-                console.log(sortedData);
+                const genre = res.data.filter(book => book.genres.includes('Classics')).slice(0, 10);
+                const sortedData = genre.sort((a, b) => b.rating - a.rating);
                 setClassic(sortedData);
             }
         } catch (err) {
@@ -36,22 +67,36 @@ const Classic = ({ title }) => {
 
     return (
         <>
-        {isLoading ? (
-            <Loading />
-        ) : (
-            <>
-                <div style={{ textAlign: "start" }}>
-                    <h1>{title}</h1>
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'nowrap', overflowX: 'auto', border: "5px solid black", height: "320px"}}>
+            <div className="title">
+                <h1>{title}</h1>
+            </div>
+            <Container>
                 {classic.map((book) => (
-                    <div key={book.id} style={{ margin: '5px 10px' }}>
-                        <img src={book.image_url} alt={book.title} style={{width: "200px", height: "300px", cursor: "pointer"}} onClick={() => navigate(`/book/${book.id}`)}/>
-                    </div>
+                    <CardWrapper
+                        key={book.id}
+                        onClick={() => navigate(`/book/${book.id}`)}
+                    >
+                        <CardImage
+                            image={book.image_url}
+                            title={book.title}
+                        />
+                    </CardWrapper>
                 ))}
-                </div>
-            </>
-            )}
+                {!isLoading && (
+                    <IconButton
+                    style={{
+                        alignSelf: 'center',
+                        color: '#FFF',
+                        transition: 'transform 0.2s ease-in-out'
+                    }}
+                    onClick={() => navigate(`/books`)}
+                    onMouseEnter={e => e.currentTarget.style.transform = 'scale(2.05)'}
+                    onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                >
+                    <ChevronRightIcon />
+                </IconButton> 
+                )}
+            </Container>
         </>
     );
 };

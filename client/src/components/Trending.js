@@ -91,11 +91,17 @@ const Trending = ({ title }) => {
                 ))}
                 {!isLoading && (
                     <IconButton
-                    style={{ alignSelf: 'center', color: '#FFF' }}
+                    style={{
+                        alignSelf: 'center',
+                        color: '#FFF',
+                        transition: 'transform 0.2s ease-in-out'
+                    }}
                     onClick={handleLoadMore}
-                  >
+                    onMouseEnter={e => e.currentTarget.style.transform = 'scale(2.05)'}
+                    onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                >
                     <ChevronRightIcon />
-                  </IconButton>
+                </IconButton> 
                 )}
             </Container>
             {isLoading && <Loading/>}

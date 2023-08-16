@@ -36,19 +36,16 @@ const Container = styled('div')({
     height: 0,
     paddingTop: '150%',
   });
-  
-  
 
 const Popular = ({ title }) => {
     const [popular, setPopular] = useState([]);
     const { isLoading, setIsLoading } = useAppContext();
     const [page, setPage] = useState(1);
-    const [initialRender, setInitialRender] = useState(true); // Add this state
+    const [initialRender, setInitialRender] = useState(true);
 
     const navigate = useNavigate();
 
     const getPopular = async (pageNum) => {
-        setIsLoading(true);
         try {
             const res = await axios.get(`${BASE_URL}_page=${pageNum}`);
             console.log(res);
@@ -94,11 +91,17 @@ const Popular = ({ title }) => {
                 ))}
                 {!isLoading && (
                     <IconButton
-                    style={{ alignSelf: 'center', color: '#FFF' }}
-                    onClick={handleLoadMore}
-                  >
-                    <ChevronRightIcon />
-                  </IconButton>
+                        style={{
+                            alignSelf: 'center',
+                            color: '#FFF',
+                            transition: 'transform 0.2s ease-in-out'
+                        }}
+                        onClick={handleLoadMore}
+                        onMouseEnter={e => e.currentTarget.style.transform = 'scale(2.05)'}
+                        onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                    >
+                        <ChevronRightIcon />
+                    </IconButton>                
                 )}
             </Container>
             {isLoading && <Loading/>}

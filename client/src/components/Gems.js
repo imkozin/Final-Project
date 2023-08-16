@@ -3,22 +3,56 @@ import { useAppContext } from "./AppContext";
 import axios from 'axios';
 import Loading from "./Loading";
 import { useNavigate } from "react-router-dom";
+import '../styles/Main.css';
+import { styled } from '@mui/system';
+import { Card, IconButton, CardMedia } from '@mui/material';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const BASE_URL = 'https://example-data.draftbit.com/books?';
+
+const Container = styled('div')({
+    display: 'flex',
+    flexWrap: 'nowrap',
+    overflowX: 'auto',
+    height: '330px',
+  });
+  
+  const CardWrapper = styled(Card)({
+    margin: '10px',
+    minWidth: 200,
+    height: 300,
+    cursor: 'pointer',
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: '10px',
+    transition: 'transform 0.2s ease-in-out',
+    '&:hover': {
+      transform: 'scale(1.05)'
+    },
+  });
+  
+  
+  const CardImage = styled(CardMedia)({
+    height: 0,
+    paddingTop: '150%',
+  });
+  
 
 const Gems = ({ title }) => {
     const [gems, setGems] = useState([]);
     const { isLoading, setIsLoading } = useAppContext();
+    const [page, setPage] = useState(1);
+    const [initialRender, setInitialRender] = useState(true);
 
     const navigate = useNavigate();
 
-    const getGems = async () => {
+    const getGems = async (pageNum) => {
         try {
-            const res = await axios.get(BASE_URL);
+            const res = await axios.get(`${BASE_URL}_page=${pageNum}`);
             console.log(res);
             if (res.data.length > 0) {
-                const sortedData = res.data.sort((a, b) => b.rating - a.rating).slice(0, 21);
-                setGems(sortedData);
+                const sortedData = res.data.sort((a, b) => b.rating - a.rating);
+                setGems(prev => [...prev, ...sortedData]);
             }
         } catch (err) {
             console.log(err.response.data.msg);
@@ -27,29 +61,51 @@ const Gems = ({ title }) => {
         }
     };
 
+    const handleLoadMore = () => {
+        setPage(prev => prev + 1);
+    };
+
     useEffect(() => {
-        setIsLoading(true);
-        getGems();
-    }, []);
+        if (initialRender) {
+            setInitialRender(false);
+            return;
+        }
+        getGems(page);
+    }, [page, initialRender]); 
 
     return (
         <>
-        {isLoading ? (
-            <Loading />
-        ) : (
-            <>
-                <div style={{ textAlign: "start" }}>
-                    <h1>{title}</h1>
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'nowrap', overflowX: 'auto', border: "5px solid black", height: "320px"}}>
-                    {gems.map((book) => (
-                        <div key={book.id} style={{ margin: '5px 10px' }}>
-                            <img src={book.image_url} alt={book.title} style={{width: "200px", height: "300px", cursor: "pointer"}} onClick={() => navigate(`/book/${book.id}`)}/>
-                        </div>
-                    ))}
-                </div>
-            </>
-            )}
+            <div className="title">
+                <h1>{title}</h1>
+            </div>
+            <Container>
+                {gems.map((book) => (
+                    <CardWrapper
+                    key={book.id}
+                    onClick={() => navigate(`/book/${book.id}`)}
+                    >
+                    <CardImage
+                        image={book.image_url}
+                        title={book.title}
+                    />
+                    </CardWrapper>
+                ))}
+                {!isLoading && (
+                    <IconButton
+                    style={{
+                        alignSelf: 'center',
+                        color: '#FFF',
+                        transition: 'transform 0.2s ease-in-out'
+                    }}
+                    onClick={handleLoadMore}
+                    onMouseEnter={e => e.currentTarget.style.transform = 'scale(2.05)'}
+                    onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                >
+                    <ChevronRightIcon />
+                </IconButton> 
+                )}
+            </Container>
+            {isLoading && <Loading/>}
         </>
     );
 };
