@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import jwt_decode from 'jwt-decode';
 import { useAppContext } from './AppContext';
-
+import { AppBar, Toolbar, Typography } from '@mui/material';
 
 const Nav = () => {
     const { isLoggedIn, setIsLoggedIn } = useAppContext();
@@ -27,25 +27,37 @@ const Nav = () => {
     };
 
     return (
-        <>
-            <div>
-                <Button component={Link} to="/main">BookFlix</Button>
-                {isLoggedIn ? (
-                    <>
-                        <Button component={Link} to="/books">Books</Button>
-                        <Button component={Link} to="/favorites">My List</Button>
-                        <Button onClick={logout}>
-                            Log Out
-                        </Button>
-                    </>
-                ) : (
-                    <>
-                        <Button component={Link} to="/register">Sign Up</Button>
-                        <Button component={Link} to="/login">Login</Button>
-                    </>
-                )}
-            </div>
-        </>
-    )
+        <AppBar position="fixed" style={{ backgroundColor: 'black', zIndex: '1' }}>
+            <Toolbar style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative' }}>
+                <div style={{ zIndex: '2' }}>
+                    <img onClick={() => navigate(`/main`)} src={`${process.env.PUBLIC_URL}/bookflix_2.jpg`} alt="Logo" style={{ marginRight: '10px', height: '30px' }} />
+                </div>
+                <div>
+                    {isLoggedIn ? (
+                        <>
+                            <Button component={Link} to="/books" style={{ color: 'white' }}>
+                                Books
+                            </Button>
+                            <Button component={Link} to="/favorites" style={{ color: 'white' }}>
+                                My List
+                            </Button>
+                            <Button onClick={logout} style={{ color: 'white' }}>
+                                Log Out
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            <Button component={Link} to="/register" style={{ color: 'white', backgroundColor: 'red', margin: '15px' }}>
+                                Sign Up
+                            </Button>
+                            <Button component={Link} to="/login" style={{ color: 'white', backgroundColor: 'red' }}>
+                                Login
+                            </Button>
+                        </>
+                    )}
+                </div>
+            </Toolbar>
+        </AppBar>
+    );
 }
 export default Nav;

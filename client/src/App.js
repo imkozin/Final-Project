@@ -14,7 +14,15 @@ function App() {
   const user = localStorage.getItem('token');
 
   return (
-    <>
+    <div className='background-container' style={{
+            backgroundImage: `url(${process.env.PUBLIC_URL}/bg.jpeg)`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            // Add other styles for your component here
+            width: '100%',
+            height: '100vh',
+        }}>
           <div className='nav'>
               <Nav/>
           </div>
@@ -36,7 +44,7 @@ function App() {
             <Route path="/login" element={<Login/>}/>
           </Routes>
       </div>
-    </>
+    </div>
   );
 }
 

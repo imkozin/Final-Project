@@ -8,12 +8,24 @@
   text-align: center;
 }
 
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color:royalblue;
-  font-size: 2em;
-  padding: 0 25px;
-  background-color: black;
+
+/* YourComponent.module.css */
+.background-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.background-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(50%); /* Apply the brightness filter */
+  z-index: -1;
 }
