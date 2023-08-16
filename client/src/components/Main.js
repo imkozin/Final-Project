@@ -10,6 +10,7 @@ import Classic from './Classics';
 import Historical from './Historical';
 import Fiction from './Fiction';
 import Favorites from './Favorites';
+import '../styles/Main.css';
 
 const Main = () => {
     const {isLoggedIn, setIsLoggedIn, favorites } = useAppContext();
@@ -28,7 +29,7 @@ const Main = () => {
     return (
         <>
             {isLoggedIn ? (
-            <div>
+            <div className='main'>
                 {favorites.length > 0 ?
                 <Favorites title="My List"/> : <></>}
                 <Popular title="Popular on Bookflix"/>
@@ -41,7 +42,7 @@ const Main = () => {
                 <Fiction title="Science Fiction"/>
             </div>
             ) : (
-            <div>
+            <div className='main'>
                 <Popular title="Popular on Bookflix"/>
                 <Trending title="Trending Now"/>
                 <Gems title="Top Rated"/>

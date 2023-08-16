@@ -3,12 +3,41 @@ import { useAppContext } from "./AppContext";
 import axios from 'axios';
 import Loading from "./Loading";
 import { useNavigate } from "react-router-dom";
+import '../styles/Main.css';
+import { styled } from '@mui/system';
+import { Card, IconButton, CardMedia } from '@mui/material';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const BASE_URL = 'https://example-data.draftbit.com/books?';
 
-// ... (other imports and constants)
-
-// ... (other imports and constants)
+const Container = styled('div')({
+    display: 'flex',
+    flexWrap: 'nowrap',
+    overflowX: 'auto',
+    height: '330px',
+  });
+  
+  const CardWrapper = styled(Card)({
+    margin: '10px',
+    minWidth: 200,
+    height: 300,
+    cursor: 'pointer',
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: '10px',
+    transition: 'transform 0.2s ease-in-out',
+    '&:hover': {
+      transform: 'scale(1.05)'
+    },
+  });
+  
+  
+  const CardImage = styled(CardMedia)({
+    height: 0,
+    paddingTop: '150%',
+  });
+  
+  
 
 const Popular = ({ title }) => {
     const [popular, setPopular] = useState([]);
@@ -45,22 +74,33 @@ const Popular = ({ title }) => {
         }
         getPopular(page);
     }, [page, initialRender]); 
-    
+
     return (
         <>
-            <div style={{ textAlign: "start" }}>
+            <div className="title">
                 <h1>{title}</h1>
             </div>
-            <div style={{ display: 'flex', flexWrap: 'nowrap', overflowX: 'auto', border: "5px solid black", height: "320px"}}>
+            <Container>
                 {popular.map((book) => (
-                    <div key={book.id} style={{ margin: '5px 10px' }}>
-                        <img src={book.image_url} alt={book.title} style={{width: "200px", height: "300px", cursor: "pointer"}} onClick={() => navigate(`/book/${book.id}`)}/>
-                    </div>
+                    <CardWrapper
+                    key={book.id}
+                    onClick={() => navigate(`/book/${book.id}`)}
+                    >
+                    <CardImage
+                        image={book.image_url}
+                        title={book.title}
+                    />
+                    </CardWrapper>
                 ))}
                 {!isLoading && (
-                    <button style={{ alignSelf: "flex-end" }} onClick={handleLoadMore}>Load More</button>
+                    <IconButton
+                    style={{ alignSelf: 'center', color: '#FFF' }}
+                    onClick={handleLoadMore}
+                  >
+                    <ChevronRightIcon />
+                  </IconButton>
                 )}
-            </div>
+            </Container>
             {isLoading && <Loading/>}
         </>
     );
