@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import {Box, TextField, Button } from '@mui/material';
+import { TextField, Button } from "@mui/material";
 import axios from 'axios';
-import '../styles/Signup.css';
 
 const Signup = () => {
     const [name, setName] = useState('');
@@ -32,50 +31,129 @@ const Signup = () => {
     }
 
     return (
-        <div className="signup_container">
-			<div className="signup_container-form">
-				<div className="signup-left">
-					<h1>Welcome Back</h1>
-					<Link to="/login">
-						<button type="button" className="white_btn">
-							Sign In
-						</button>
-					</Link>
-				</div>
-                <div className="signup-right">
-                    <form className="form-container" onSubmit={handleSubmit}>
-                        <h1>Create Account
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundImage: `url(${process.env.PUBLIC_URL}/sign.jpg)`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            width: '100%',
+            height: '100vh',
+        }}>
+			<div style={{
+                    backgroundColor: '#000',
+                    opacity: '0.8',
+                    width: '400px',
+                    height: '600px',
+                    borderRadius: '10px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    padding: '20px',
+                }}>			   
+                    <form style={{
+                            flex: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }} 
+                        onSubmit={handleSubmit}>
+                        <h1 style={{ color: '#FFF', fontFamily: 'Inter', marginBottom: '25px' }}>Sign Up
                         </h1>
-                        <input
+                        <TextField
+                            error
+                            id="filled-error"
+                            label="Username"
+                            variant="filled"
                             type="text"
                             placeholder="Enter Username"
                             name="username"
-                            value={name}
-                            required className="input"
+                            value={email}
+                            required
+                            style={{
+                                width: '80%',
+                                marginBottom: '25px',
+                            }}
+                            inputProps={{
+                                style: {
+                                    backgroundColor: 'gray',
+                                    borderRadius: '5px',
+                                    border: '1px solid white'
+                                },
+                            }}
                             onChange={(e) => setName(e.target.value)}
                         />
-                        <input
+                        <TextField
+                            error
+                            id="filled-error"
+                            label="E-mail"
+                            variant="filled"
                             type="email"
                             placeholder="Enter Email"
                             name="email"
                             value={email}
-                            required className="input"
+                            required
+                            style={{
+                                width: '80%',
+                                marginBottom: '25px',
+                            }}
+                            inputProps={{
+                                style: {
+                                    backgroundColor: 'gray',
+                                    borderRadius: '5px',
+                                    border: '1px solid white'
+                                },
+                            }}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        <input
+                        <TextField
+                            error
+                            id="filled-error"
+                            label="Password"
+                            variant="filled"
                             type="password"
                             placeholder="Enter Password"
                             name="password"
                             value={password}
-                            required className="input"
+                            required
+                            style={{
+                                width: '80%', 
+                                marginBottom: '25px',
+                            }}
+                            inputProps={{
+                                style: {
+                                    backgroundColor: 'gray',
+                                    borderRadius: '5px',
+                                    border: '1px solid white'
+                                },
+                            }}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <button type="submit" className="green_btn">Sign Up</button>
+                        <Button
+                            type="submit"
+                            style={{
+                                width: '80%',
+                                backgroundColor: 'red',
+                                color: 'white',
+                                marginBottom: '25px'
+                            }}
+                        >
+                            Sign Up
+                        </Button>
                         {error && <div className="error_msg">{error}</div>}
                     </form>
+                    <div style={{ fontFamily: 'Inter', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '25px' }}>
+                        <p style={{color: 'gray', marginRight: '10px'}}>Already have an account?</p>
+                        <Link to="/login" 
+                        style={{
+                            color: '#FFF',
+                            fontFamily: 'Inter',
+                        }}>Sign In here.</Link>
+                    </div>
                 </div>
             </div>
-        </div>
     )
 }
 

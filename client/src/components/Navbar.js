@@ -51,7 +51,7 @@ const Nav = () => {
                                 Sign Up
                             </Button>
                             <Button component={Link} to="/login" style={{ color: 'white', backgroundColor: 'red' }}>
-                                Login
+                                Sign In
                             </Button>
                         </>
                     )}

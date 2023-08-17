@@ -1,11 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: black; /* Your background color */
+  color: #FFF;
+  font-family: 'Inter';
+}
+
+.title {
+    text-align: start;
+}
+
 .App {
   text-align: center;
+  color: #FFF;
+  height: 100vh;
+  padding-top: 70px;
+  padding-left: 20px;
 }
 
 
@@ -26,6 +44,5 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  filter: brightness(50%); /* Apply the brightness filter */
   z-index: -1;
 }

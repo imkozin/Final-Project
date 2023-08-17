@@ -1,12 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-
-.main {
-    background-color: #000;
-    color: #FFF;
-    font-family: 'Inter';
-    padding-top: 70px;
+.footer {
+    background-color: black;
+    position: absolute;
+    left: 0;
+    right: 0;
 }
 
-.title {
-    text-align: start;
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+.footer-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    
 }

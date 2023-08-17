@@ -5,13 +5,23 @@ import { useAppContext } from "./AppContext";
 import Movie from "./Movie";
 import Loading from "./Loading";
 import { getCurrentUser } from "../helpers/utils";
-import { Button } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
+import { Button, TextField } from '@mui/material';
+import Textarea from '@mui/joy/Textarea';
+import { styled } from '@mui/system';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 
 const BOOK_URL = 'https://example-data.draftbit.com/books';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
+
+const TextArea = styled(Textarea)({
+    backgroundColor: 'black',
+    border: '1px solid red',
+    color: 'white',
+    width: '75%',
+    marginBottom: '20px'
+  });
 
 const Book = () => {
     const {book, setBook, favorites, setFavorites, isLoading, setIsLoading} = useAppContext()
@@ -117,34 +127,55 @@ const Book = () => {
     
 
     return(
-        <div style={{ display: 'flex'}}>
-            <div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', justifyContent: 'space-around' }}>
-                <img src={book?.image_url} alt="book-cover"></img>    
+        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'start'}}>
+            <div >
+                <img src={book?.image_url} alt="book-cover" style={{ width: 275, height: 400, borderRadius: '5px'}}></img>    
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', justifyContent: "space-between", textAlign: 'start', width: "700px" }}>
-                <h1 style={{textAlign: 'center' }}>{book?.title}</h1>
-                <p><b>Author: </b>{book?.authors}</p>
-                <p><b>Genre: </b>{book?.genres}</p>
-                <p><b>Pages: </b>{book?.num_pages}</p>
-                <p>{book?.description}</p>
-                {checkFavorite(book.id) ? <Button size="small" color="primary" onClick={()=> removeFromFavorites(book.id)}>
-                        Don't Like <HeartBrokenIcon/>
+            <div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', justifyContent: "space-around", textAlign: 'start', width: "700px" }}>
+                <h1 style={{textAlign: 'center', marginBottom: '20px' }}>{book?.title}</h1>
+                <p style={{marginBottom: '20px' }}><b>Author: </b>{book?.authors}</p>
+                <p style={{marginBottom: '20px' }}><b>Genre: </b>{book?.genres}</p>
+                <p style={{marginBottom: '20px' }}><b>Pages: </b>{book?.num_pages}</p>
+                <p style={{marginBottom: '20px' }}>{book?.description}</p>
+                <div style={{marginBottom: '20px' }}>
+                {checkFavorite(book.id) ? <Button size="small" color="primary" onClick={()=> removeFromFavorites(book.id)} style={{color: 'white' }}>
+                        Remove from My List<ThumbDownOffAltIcon style={{color: 'white', marginLeft: '10px'}}/>
                         </Button> :
-                        <Button size="small" color="primary" onClick={()=> addToFavorites(book)}>
-                        Like <FavoriteIcon/>
+                        <Button size="small" color="primary" onClick={()=> addToFavorites(book)} style={{color: 'white'}}>
+                        Add to My List <AddCircleOutlineIcon style={{color: 'white', marginLeft: '10px'}}/>
                         </Button>}
-
-                <form onSubmit={submitReview}>
-                    Title: <input type="text"         name="title"
-                            value={title}
-                            required 
-                            onChange={(e) => setTitle(e.target.value)}/>
-                    Review: <textarea 
-                    name="text"
-                    value={text}
-                    required 
-                    onChange={(e) => setText(e.target.value)}/>
-                    <button type="submit">Post</button>
+                </div>
+                <form onSubmit={submitReview} style={{borderTop: '1px solid white', borderBottom: '1px solid white'}}>
+                    <h2 style={{
+                            margin: '20px 0',
+                        }}>Add Your Review</h2>
+                    <TextField
+                        error
+                        label="Title"
+                        value={title}
+                        required
+                        onChange={(e) => setTitle(e.target.value)}
+                        style={{
+                            marginBottom: '20px'
+                        }}
+                        inputProps={{
+                            style: {
+                                borderRadius: '5px',
+                                color: 'white'
+                            },
+                        }}/>
+                    <TextArea
+                        name="review"
+                        variant="outlined"
+                        color="danger"
+                        value={text}
+                        required
+                        onChange={(e) => setText(e.target.value)}
+                        minRows={4}
+                    />
+                    <Button type="submit" style={{ color: 'white', backgroundColor: 'red', marginBottom: '20px' }}>
+                        Post
+                    </Button>
                 </form>
                 <div>
                     <div>

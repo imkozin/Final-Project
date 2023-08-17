@@ -42,15 +42,9 @@ const Main = () => {
                 <Fiction title="Science Fiction"/>
             </div>
             ) : (
-            <div className='main'>
+            <div>
                 <Popular title="Popular on Bookflix"/>
                 <Trending title="Trending Now"/>
-                <Gems title="Top Rated"/>
-                <Thriller title="Thrillers"/>
-                <Romance title="Romance"/>
-                <Classic title="Classics"/>
-                <Historical title="History"/>
-                <Fiction title="Science Fiction"/>
             </div>
             )}
         </>

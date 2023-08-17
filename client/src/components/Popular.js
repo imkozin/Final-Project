@@ -3,7 +3,6 @@ import { useAppContext } from "./AppContext";
 import axios from 'axios';
 import Loading from "./Loading";
 import { useNavigate } from "react-router-dom";
-import '../styles/Main.css';
 import { styled } from '@mui/system';
 import { Card, IconButton, CardMedia } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
