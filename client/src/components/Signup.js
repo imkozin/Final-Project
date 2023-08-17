@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import axios from 'axios';
+import Footer from "./Footer";
 
 const Signup = () => {
     const [name, setName] = useState('');
@@ -31,6 +32,7 @@ const Signup = () => {
     }
 
     return (
+        <>
         <div style={{
             display: 'flex',
             justifyContent: 'center',
@@ -64,9 +66,8 @@ const Signup = () => {
                         </h1>
                         <TextField
                             error
-                            id="filled-error"
                             label="Username"
-                            variant="filled"
+                            variant="outlined"
                             type="text"
                             placeholder="Enter Username"
                             name="username"
@@ -78,18 +79,16 @@ const Signup = () => {
                             }}
                             inputProps={{
                                 style: {
-                                    backgroundColor: 'gray',
                                     borderRadius: '5px',
-                                    border: '1px solid white'
+                                    color: 'red'
                                 },
                             }}
                             onChange={(e) => setName(e.target.value)}
                         />
                         <TextField
                             error
-                            id="filled-error"
                             label="E-mail"
-                            variant="filled"
+                            variant="outlined"
                             type="email"
                             placeholder="Enter Email"
                             name="email"
@@ -101,18 +100,16 @@ const Signup = () => {
                             }}
                             inputProps={{
                                 style: {
-                                    backgroundColor: 'gray',
                                     borderRadius: '5px',
-                                    border: '1px solid white'
+                                    color: 'red'
                                 },
                             }}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <TextField
                             error
-                            id="filled-error"
                             label="Password"
-                            variant="filled"
+                            variant="outlined"
                             type="password"
                             placeholder="Enter Password"
                             name="password"
@@ -124,9 +121,8 @@ const Signup = () => {
                             }}
                             inputProps={{
                                 style: {
-                                    backgroundColor: 'gray',
                                     borderRadius: '5px',
-                                    border: '1px solid white'
+                                    color: 'red'
                                 },
                             }}
                             onChange={(e) => setPassword(e.target.value)}
@@ -154,6 +150,10 @@ const Signup = () => {
                     </div>
                 </div>
             </div>
+            <div >
+        <Footer />
+    </div>
+    </>
     )
 }
 

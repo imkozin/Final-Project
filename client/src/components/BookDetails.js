@@ -69,8 +69,7 @@ const Book = () => {
         getReview();
     }, [refresh]);
 
-    const submitReview = async (e) => {
-    e.preventDefault();
+    const submitReview = async () => {
     try {
         const token = localStorage.getItem('token');
         if (!token) {

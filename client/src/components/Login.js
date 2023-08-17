@@ -66,9 +66,8 @@ const Login = () => {
                 <h1 style={{ color: '#FFF', fontFamily: 'Inter', marginBottom: '25px' }}>Sign In</h1>
                 <TextField
                     error
-                    id="filled-error"
                     label="E-mail"
-                    variant="filled"
+                    variant="outlined"
                     type="email"
                     placeholder="Enter Email"
                     name="email"
@@ -80,18 +79,16 @@ const Login = () => {
                     }}
                     inputProps={{
                         style: {
-                            backgroundColor: 'gray',
                             borderRadius: '5px',
-                            border: '1px solid white'
+                            color: 'red'
                         },
                     }}
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <TextField
                     error
-                    id="filled-error"
                     label="Password"
-                    variant="filled"
+                    variant="outlined"
                     type="password"
                     placeholder="Enter Password"
                     name="password"
@@ -103,9 +100,8 @@ const Login = () => {
                     }}
                     inputProps={{
                         style: {
-                            backgroundColor: 'gray',
                             borderRadius: '5px',
-                            border: '1px solid white'
+                            color: 'red'
                         },
                     }}
                     onChange={(e) => setPassword(e.target.value)}
