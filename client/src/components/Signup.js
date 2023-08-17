@@ -70,7 +70,7 @@ const Signup = () => {
                             type="text"
                             placeholder="Enter Username"
                             name="username"
-                            value={email}
+                            value={name}
                             required
                             style={{
                                 width: '80%',

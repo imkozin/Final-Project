@@ -40,8 +40,6 @@ const Container = styled('div')({
 
 const BookList = () => {
     const { books, setBooks, isLoading, setIsLoading } = useAppContext();
-    const [page, setPage] = useState(1);
-    const [initialRender, setInitialRender] = useState(true);
     const [query, setQuery] = useState("");
     
 
@@ -51,33 +49,34 @@ const BookList = () => {
 
     const navigate = useNavigate();
 
-    const getBooks = async (pageNum) => {
-        try {
-            const res = await axios.get(`${BASE_URL}_page=${pageNum}`);
-            console.log(res);
-            setBooks(prev => [...prev, ...res.data]);
-        } catch (err) {
-            console.log(err.response.data.msg);
-        }
-        setIsLoading(false);
-    }
-
-
-    // useEffect(() => {
-    //     getBooks();
-    // }, []) 
-
-    const handleLoadMore = () => {
-      setPage(prev => prev + 1);
+    const getBooks = async () => {
+      try {
+        const res = await axios.get(BASE_URL);
+        console.log(res);
+        setBooks(res.data);
+      } catch (err) {
+        console.log(err.response.data.msg);
+      }
+      setIsLoading(false);
     };
+    
+
 
     useEffect(() => {
-      if (initialRender) {
-          setInitialRender(false);
-          return;
-      }
-      getBooks(page);
-  }, [page, initialRender]); 
+        getBooks();
+    }, []) 
+
+  //   const handleLoadMore = () => {
+  //     setPage(prev => prev + 1);
+  //   };
+
+  //   useEffect(() => {
+  //     if (initialRender) {
+  //         setInitialRender(false);
+  //         return;
+  //     }
+  //     getBooks(page);
+  // }, [page, initialRender]); 
 
     return (
       <>
@@ -114,7 +113,7 @@ const BookList = () => {
                               </CardWrapper>
                           ))}
                       </Container>
-                        <IconButton
+                        {/* <IconButton
                             style={{
                                 alignSelf: 'center',
                                 color: '#FFF',
@@ -125,7 +124,7 @@ const BookList = () => {
                             onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                         >
                         <KeyboardArrowDownIcon />
-                        </IconButton>
+                        </IconButton> */}
                       </>
                   ) : (
                       <>
@@ -137,7 +136,6 @@ const BookList = () => {
           )}
       </>
   );
-  
 }
 
 export default BookList;

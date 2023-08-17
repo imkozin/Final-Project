@@ -125,6 +125,10 @@ const Book = () => {
         return isFavorite;
     }
     
+    const formatDate = (isoDateString) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        return new Date(isoDateString).toLocaleString(undefined, options);
+      };
 
     return(
         <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'start'}}>
@@ -179,13 +183,16 @@ const Book = () => {
                 </form>
                 <div>
                     <div>
+                    <h2 style={{
+                            margin: '20px 0',
+                        }}>User Reviews:</h2>
                         {reviews.length > 0 ? (
                             reviews.map((rev) => (
-                                <div key={rev.id}>
-                                    <h1>{rev.title}</h1>
-                                    <p>{rev.text}</p>
-                                    <p>{rev.date}</p>
-                                    <p>Posted by: {rev.username}</p>
+                                <div key={rev.id} style={{ borderBottom: '1px solid white', marginBottom: '20px'}}>
+                                    <h3 style={{marginBottom: '15px'}}>Title: {rev.title}</h3>
+                                    <p style={{marginBottom: '15px'}}><b>Review text: </b>{rev.text}</p>
+                                    <p style={{marginBottom: '15px'}}></p>
+                                    <p style={{marginBottom: '15px'}}>Posted by: {rev.username} on {formatDate(rev.date)}</p>
                                 </div>
                             ))
                         ) : (
