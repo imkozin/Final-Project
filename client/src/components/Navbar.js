@@ -27,7 +27,7 @@ const Nav = () => {
     };
 
     return (
-        <AppBar position="fixed" style={{ backgroundColor: 'black', zIndex: '1' }}>
+        <AppBar position="fixed" style={{ backgroundColor: 'black', zIndex: '1', opacity: "0.9" }}>
             <Toolbar style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative' }}>
                 <div style={{ zIndex: '2' }}>
                     <img onClick={() => navigate(`/main`)} src={`${process.env.PUBLIC_URL}/bookflix_2.jpg`} alt="Logo" style={{ marginRight: '10px', height: '30px' }} />

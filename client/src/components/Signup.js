@@ -146,7 +146,7 @@ const Signup = () => {
                         style={{
                             color: '#FFF',
                             fontFamily: 'Inter',
-                        }}>Sign In here.</Link>
+                        }}>Sign in here.</Link>
                     </div>
                 </div>
             </div>

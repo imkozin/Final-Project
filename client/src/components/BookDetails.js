@@ -10,6 +10,7 @@ import Textarea from '@mui/joy/Textarea';
 import { styled } from '@mui/system';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+import Modal from 'react-modal';
 
 const BOOK_URL = 'https://example-data.draftbit.com/books';
 
@@ -69,7 +70,8 @@ const Book = () => {
         getReview();
     }, [refresh]);
 
-    const submitReview = async () => {
+    const submitReview = async (e) => {
+        e.preventDefault();
     try {
         const token = localStorage.getItem('token');
         if (!token) {
