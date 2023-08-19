@@ -107,6 +107,8 @@ const Book = () => {
                 const data = await res.data;
                 console.log('Server response:', data);
                 setRefresh(refresh?false:true);
+                setTitle('');
+                setText('');
             } else {
                 console.log('Review submission failed.');
                 setError("Review wasn't added");
