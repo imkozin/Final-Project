@@ -10,7 +10,8 @@ import Textarea from '@mui/joy/Textarea';
 import { styled } from '@mui/system';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
-import Modal from 'react-modal';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const BOOK_URL = 'https://example-data.draftbit.com/books';
 
@@ -31,6 +32,20 @@ const Book = () => {
     const [error, setError] = useState('');
     const [reviews, setReviews] = useState([]);
     const [refresh, setRefresh] = useState(true);
+    const [open, setOpen] = useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+
+        setOpen(false);
+    };
+
 
     const username = getCurrentUser();
     const favoritesKey = `favoritesOf${username}`;
@@ -106,6 +121,8 @@ const Book = () => {
         }
     };
 
+    
+
     const addToFavorites = (book) => {
         const oldFavorites = [...favorites];
         const newFavorites = oldFavorites.concat(book);
@@ -132,7 +149,7 @@ const Book = () => {
       };
 
     return(
-        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'start'}}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', alignItems: 'start'}}>
             <div >
                 <img src={book?.image_url} alt="book-cover" style={{ width: 275, height: 400, borderRadius: '5px'}}></img>    
             </div>
@@ -178,9 +195,14 @@ const Book = () => {
                         onChange={(e) => setText(e.target.value)}
                         minRows={4}
                     />
-                    <Button type="submit" style={{ color: 'white', backgroundColor: 'red', marginBottom: '20px' }}>
+                    <Button type="submit" style={{ color: 'white', backgroundColor: 'red', marginBottom: '20px' }} onClick={handleClick}>
                         Post
                     </Button>
+                    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                        Your review has been posted successfully!
+                        </Alert>
+                    </Snackbar>
                 </form>
                 <div>
                     <div>
